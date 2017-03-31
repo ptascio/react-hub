@@ -1,4 +1,4 @@
-import { RECEIVE_PROFILE } from '../actions/profile_actions';
+import { RECEIVE_PROFILE, RECEIVE_REPOS } from '../actions/profile_actions';
 
 const profileReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -7,6 +7,11 @@ const profileReducer = (state = {}, action) => {
     case RECEIVE_PROFILE:
       newState = Object.assign({}, state);
       newState.profile = action.profile.data;
+      newState.message = action.profile.data.message;
+      return newState;
+    case RECEIVE_REPOS:
+      newState = Object.assign({}, state);
+      newState.repos = action.repos.data;
       return newState;
     default:
       return state;

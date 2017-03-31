@@ -6,7 +6,8 @@ class Profile extends React.Component {
     this.state = {
       pic: '',
       fullname: '',
-      login: ''
+      login: '',
+      message: ''
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -19,6 +20,7 @@ class Profile extends React.Component {
       login: e.target.value
     });
   }
+
   handleClick(){
     this.props.fetchUser(this.state.login);
   }
@@ -26,7 +28,8 @@ class Profile extends React.Component {
   componentWillReceiveProps(newProps, newState){
     this.setState({
       pic: newProps.profile.avatar_url,
-      fullname: newProps.profile.name
+      fullname: newProps.profile.name,
+      message: newProps.profile.message
     });
   }
 
@@ -37,12 +40,12 @@ class Profile extends React.Component {
   }
 
   render(){
-
     return (
       <div>
         <h1>Profile</h1>
         <input onChange={this.handleChange} />
         <button onClick={this.handleClick}>Click Me</button><br />
+        <h2>User {this.state.message}</h2>
         <p>{this.state.fullname}</p>
         <img src={this.state.pic} />
       </div>
