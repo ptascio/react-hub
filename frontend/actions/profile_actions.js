@@ -7,9 +7,9 @@ export const receieveProfile = (profile) => ({
   profile
 });
 
-export function fetchUser(){
+export function fetchUser(username){
   return (dispatch) => {
-    return APIUtil.fetchUser().then(profile => {
+    return APIUtil.fetchUser(username).then(profile => {
       dispatch(receieveProfile(profile));
       return profile;
     });

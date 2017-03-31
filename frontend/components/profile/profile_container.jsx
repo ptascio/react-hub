@@ -4,13 +4,13 @@ import Profile from './profile';
 
 const mapStateToProps = state => {
   return {
-    store: state
+    profile: state.profile
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchUser: () => dispatch(fetchUser())
+    fetchUser: (username) => dispatch(fetchUser(username))
   };
 };
 

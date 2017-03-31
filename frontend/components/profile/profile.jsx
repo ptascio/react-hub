@@ -5,33 +5,45 @@ class Profile extends React.Component {
     super();
     this.state = {
       pic: '',
-      username: '',
+      fullname: '',
+      login: ''
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
+  handleChange(e){
+    e.preventDefault();
+    console.log(this.state.login);
+    this.setState({
+      login: e.target.value
+    });
+  }
   handleClick(){
-    $.ajax({
-      type: 'GET',
-      dataType: 'jsonp',
-      url: 'https://api.github.com/users/ptascio',
-      success: data => {
-        console.log(data);
-        const userPic = data.data.avatar_url;
-        this.setState({
-          pic: userPic,
-          username: data.data.name,
-        });
-      }
+    this.props.fetchUser(this.state.login);
+  }
+
+  componentWillReceiveProps(newProps, newState){
+    this.setState({
+      pic: newProps.profile.avatar_url,
+      fullname: newProps.profile.name
     });
   }
 
+  shouldComponentUpdate(prevState, newState){
+    if (newState !== prevState){
+      return true;
+    }
+  }
+
   render(){
+
     return (
       <div>
-        <h1>Component</h1>
+        <h1>Profile</h1>
+        <input onChange={this.handleChange} />
         <button onClick={this.handleClick}>Click Me</button><br />
-        <p>{this.state.username}</p>
+        <p>{this.state.fullname}</p>
         <img src={this.state.pic} />
       </div>
     );
