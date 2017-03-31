@@ -1,4 +1,4 @@
-export const fetchUser = () => {
+export const fetchUser = (username) => {
   return $.ajax({
     method: 'GET',
     dataType: 'jsonp',

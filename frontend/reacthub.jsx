@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Profile from './components/profile/profile.jsx';
+import ProfileContainer from './components/profile/profile_container.jsx';
+import configureStore from './store/store';
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
-  ReactDOM.render(<Profile />, root);
+  let store = configureStore();
+  window.store = store;
+  ReactDOM.render(<ProfileContainer store={store}/>, root);
 });
