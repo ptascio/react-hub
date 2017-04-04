@@ -1,5 +1,6 @@
 import React from 'react';
 import Repos from '../repos/repos';
+import ReposContainer from '../repos/repos_container';
 
 class Profile extends React.Component {
   constructor(){
@@ -12,32 +13,32 @@ class Profile extends React.Component {
       repos: undefined
     };
     this.getUser = this.getUser.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.getRepos = this.getRepos.bind(this);
   }
 
-  handleChange(e){
-    e.preventDefault();
-    console.log(this.state.login);
-    this.setState({
-      login: e.target.value
-    });
-  }
 
   getUser(){
-    this.props.fetchUser(this.state.login);
+    this.props.fetchUser();
   }
 
   getRepos(){
-    this.props.fetchRepos(this.state.login);
+    this.props.fetchRepos();
   }
 
   componentWillReceiveProps(newProps, newState){
+    if(newProps.repos !== this.props.repos || this.state.pic === ""){
     this.setState({
-      pic: newProps.profile.avatar_url,
-      fullname: newProps.profile.name,
-      message: newProps.profile.message,
+      pic: newProps.profile.profile.avatar_url,
+      fullname: newProps.profile.profile.name,
+      message: newProps.profile.profile.message,
       repos: newProps.repos
+    });
+  }
+  }
+
+  componentDidMount(){
+    this.props.fetchUser().then(() => {
+      this.props.fetchRepos();
     });
   }
 
@@ -47,23 +48,10 @@ class Profile extends React.Component {
     }
   }
 
-  revealReposButton(){
-    if (this.state.fullname.length > 0){
-      return(
-        <div>
-          <button onClick={this.getRepos}>FetchRepos for {this.state.fullname}</button>
-        </div>
-      );
-    }else {
-      return null;
-    }
-  }
-
   revealRepos(){
-
     if (this.state.repos !== undefined){
       return(
-        <Repos repos={this.state.repos} />
+        <ReposContainer repos={this.state.repos} />
       );
     }else {
       return null;
@@ -72,15 +60,25 @@ class Profile extends React.Component {
 
   render(){
     return (
+      <div className="main-section">
+        <div className="header flex-item">
+          <img src="/app/assets/images/reacthub.png"/>
+          <h3 className="flex-item inner-header logo">ReactHub</h3>
+            <p className="flex-item inner-header">Hello, {this.state.fullname}</p>
+        </div>
+        <div className="profile-section flex-item">
+          <img src={this.state.pic} className="profile-pic"/>
+          { this.revealRepos() }
+      </div>
       <div>
-        <h1>Profile</h1>
-        <input onChange={this.handleChange} />
-        <button onClick={this.getUser}>Click Me</button><br />
-        <h2>User {this.state.message}</h2>
-        <p>{this.state.fullname}</p>
-        <img src={this.state.pic} />
-        { this.revealReposButton() }
-        { this.revealRepos() }
+        <h2>Issues.</h2>
+        <p>We've all got them, so don't hide it.</p>
+        <p>Get your issues out into the open.</p>
+        <p>Click on the repo name above to view or close it's issues.</p>
+        <p>You can also make a new issue if you want.</p>
+        <p>Because let's face it: We all have issues.</p>
+        <p>Don't cover them up.</p>
+      </div>
       </div>
     );
   }

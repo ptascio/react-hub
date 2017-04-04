@@ -11,6 +11,7 @@ const profileReducer = (state = {}, action) => {
       return newState;
     case RECEIVE_REPOS:
       newState = Object.assign({}, state);
+
       newState.repos = action.repos.data;
       return newState;
     default:

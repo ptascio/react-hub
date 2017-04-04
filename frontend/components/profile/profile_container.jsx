@@ -5,14 +5,14 @@ import Profile from './profile';
 const mapStateToProps = state => {
   return {
     profile: state.profile,
-    repos: state.repos
+    repos: state.profile.repos
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchUser: (username) => dispatch(fetchUser(username)),
-    fetchRepos: (username) => dispatch(fetchRepos(username))
+    fetchUser: () => dispatch(fetchUser()),
+    fetchRepos: () => dispatch(fetchRepos()),
   };
 };
 
