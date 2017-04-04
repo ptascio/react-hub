@@ -1,3 +1,4 @@
+// make sure to wrap your token in ''
 var token = //your token here;
 
 export const fetchRepoIssues = (repo) => {
